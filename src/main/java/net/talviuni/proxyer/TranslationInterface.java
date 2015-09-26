@@ -6,6 +6,6 @@ public interface TranslationInterface<S, T> {
     
     public Class<T> getTargetClass();
     
-    public T translate(S objectToTranslate);
+    public <O extends Object> T translate(O objectToTranslate);
     
 }

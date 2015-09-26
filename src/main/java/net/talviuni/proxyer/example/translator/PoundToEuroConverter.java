@@ -1,5 +1,7 @@
 package net.talviuni.proxyer.example.translator;
 
+import javax.management.RuntimeErrorException;
+
 import net.talviuni.proxyer.TranslationInterface;
 import net.talviuni.proxyer.example.Euro;
 import net.talviuni.proxyer.example.Pound;
@@ -14,9 +16,13 @@ public class PoundToEuroConverter implements TranslationInterface<Pound, Euro> {
         return Euro.class;
     }
 
-    public Euro translate(Pound objectToTranslate) {
+    public <O> Euro translate(O objectToTranslate) {
+        if(!(objectToTranslate instanceof Pound)) {
+            throw new RuntimeErrorException(null, "Class is not Pound: " + objectToTranslate.getClass().getName());
+        }
+        Pound poundtoTranslate = (Pound) objectToTranslate;
         Euro euro = new Euro();
-        euro.setValue(objectToTranslate.getValue() * 0.8);
+        euro.setValue(poundtoTranslate.getValue() * 0.8);
         return euro;
     }
 
