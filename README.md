@@ -3,7 +3,7 @@ A quick "how is this done" thing to understand dynamic proxying.
 
 I wanted to understand how to go from manually writing a wrapper to dynamically creating a wrapper from
 an interface and a wrapped implementation. So instead of having this:
-
+```java
 public class FoodShop {
   Pastry getFood(Pound money) {
       Euro euro = new Euro();
@@ -18,9 +18,9 @@ public class FoodShop {
       return pastry;
   }
 }
-  
+```
 to this;
-
+```java
 public interface FoodShop {
   Pastry getFood(Pound money);
 }
@@ -28,3 +28,4 @@ public interface FoodShop {
 used with:
   FoodShop proxyedFoodStore = proxyer.getInstance(FoodShop.class);
   Pastry pastry = proxyedFoodStore.getFood(new Pound(1.35));
+```
