@@ -15,7 +15,7 @@ import net.talviuni.proxyer.example.translator.StrudelToPastryConverter;
 
 public class Proxyer {
     private final Map<Class<?>, TranslationInterface<?, ?>> translators;
-    private final Map<Class<?>, Class<?>> classesToWrap;
+    private final Map<Class<?>, Class<?>> boundImplementations;
 
     public Proxyer() {
         translators = new HashMap<Class<?>, TranslationInterface<?, ?>>();
@@ -24,13 +24,13 @@ public class Proxyer {
         translators.put(strudelToPastryConverter.getSourceClass(), strudelToPastryConverter);
         translators.put(poundToEuroConverter.getSourceClass(), poundToEuroConverter);
 
-        classesToWrap = new HashMap<Class<?>, Class<?>>();
-        classesToWrap.put(FoodShop.class, StrudelShop.class);
+        boundImplementations = new HashMap<Class<?>, Class<?>>();
+        boundImplementations.put(FoodShop.class, StrudelShop.class);
     }
 
     @SuppressWarnings("unchecked")
     public <T> T getInstance(final Class<T> sourceClass) throws Exception {
-        Class<?> targetClass = classesToWrap.get(sourceClass);
+        Class<?> targetClass = boundImplementations.get(sourceClass);
         final Object targetInstance = targetClass.newInstance();
 
         InvocationHandler invocationHandler = new InvocationHandler() {
